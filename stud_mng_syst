@@ -1,0 +1,227 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+struct student
+{
+   char firstname[20];
+   char lastname[20];
+   int rollno;
+   char dob[20];
+   float percent;
+   char cour[20];
+};
+
+struct student s1[100];
+int c = 0;
+
+void add_student()
+{
+   int n;
+   printf("Enter number of students: ");
+   scanf("%d", &n);
+   for (int i = c; i < c + n; i++) {
+         printf("Enter the first name:\n");
+         scanf("%s", s1[i].firstname);
+         printf("Enter the last name:\n");
+         scanf("%s", s1[i].lastname);
+         printf("Enter the roll number:\n");
+         scanf("%d", &s1[i].rollno);
+         printf("Enter the date of birth:\n");
+         scanf("%s", s1[i].dob);
+         printf("Enter the course opted by student: ");
+         scanf("%s", s1[i].cour);
+         printf("Enter the percentage:\n");
+         scanf("%f", &s1[i].percent);
+   }
+   c += n;
+}
+
+void check_roll()
+{
+   int roll;
+   printf("Enter the roll number of student to search: ");
+   scanf("%d", &roll);
+   for (int i = 0; i < c; i++)
+   {
+         if (roll == s1[i].rollno)
+         {
+             printf("First name: %s\n", s1[i].firstname);
+             printf("Last name: %s\n", s1[i].lastname);
+             printf("Date of birth: %s\n", s1[i].dob);
+             printf("Course: %s\n", s1[i].cour);
+             printf("Percentage: %.1f\n", s1[i].percent);
+             return;
+         }
+   }
+   printf("Student with above roll is not found.\n");
+}
+
+void check_firstname()
+{
+   char fn[15];
+   printf("Enter first name to search:");
+   scanf("%s", fn);
+   for (int i = 0; i < c; i++)
+   {
+         if (strcmp(fn, s1[i].firstname) == 0)
+         {
+             printf("First name: %s\n", s1[i].firstname);
+             printf("Last name: %s\n", s1[i].lastname);
+             printf("Date of birth: %s\n", s1[i].dob);
+             printf("Course: %s\n", s1[i].cour);
+             printf("Percentage: %.1f\n", s1[i].percent);
+         }
+   }
+}
+
+void check_course()
+{
+   char course[20];
+   printf("Enter course to search: ");
+   scanf("%s",course);
+   for (int i = 0; i < c; i++)
+   {
+         if (strcmp(course, s1[i].cour) == 0)
+         {
+             printf("First name: %s\n", s1[i].firstname);
+             printf("Last name: %s\n", s1[i].lastname);
+             printf("Date of birth: %s\n", s1[i].dob);
+             printf("Percentage: %.2f\n", s1[i].percent);
+             printf("Course: %s\n", s1[i].cour);
+         }
+   }
+}
+
+void student_count()
+{
+   printf("Total number of students: %d\n", c);
+}
+
+void student_update()
+{
+   int roll;
+   printf("Enter the roll number to update: ");
+   scanf("%d", &roll);
+   for (int i = 0; i < c; i++)
+   {
+         if (s1[i].rollno == roll)
+         {
+             int option;
+             printf("1. First name\n2. Last name\n3. DOB\n4.Percentage\n5. Course\n");
+             printf("Enter number to update any one of the above details: ");
+             scanf("%d", &option);
+             switch (option)
+             {
+                 case 1:
+                 printf("Enter the new first name:");
+                 scanf("%s", s1[i].firstname);
+                 break;
+
+                 case 2:
+                 printf("Enter the new last name:");
+                 scanf("%s", s1[i].lastname);
+                 break;
+
+                 case 3:
+                 printf("Enter the new DOB:");
+                 scanf("%s", s1[i].dob);
+                 break;
+
+                 case 4:
+                 printf("Enter the new percentage:");
+                 scanf("%f", &s1[i].percent);
+                 break;
+
+                 case 5:
+                 printf("Enter the new course:");
+                 scanf("%s", s1[i].cour);
+                 break;
+
+                 default: printf("Invalid details entered.\n");
+             }
+             printf("Update successful.\n");
+             return;
+         }
+   }
+   printf("Roll number not found.\n");
+}
+
+void student_delete()
+{
+   int roll;
+   printf("Enter roll number to delete: ");
+   scanf("%d", &roll);
+   for (int i = 0; i < c; i++)
+   {
+         if (s1[i].rollno == roll)
+         {
+             for (int j = i; j < c - 1; j++)
+             {
+                 s1[j] = s1[j + 1];
+             }
+             c--;
+             printf("Student deleted successfully.\n");
+             return;
+         }
+   }
+   printf("Roll number not found.\n");
+}
+
+
+
+int main()
+{
+         int choice;
+         while(1)
+{
+         printf("\n***_______SCHOOL MANAGEMENT SYSTEM_______***\n");
+         printf("1. Add student details\n");
+         printf("2. Find student by roll number\n");
+         printf("3. Find student by first name\n");
+         printf("4. Find students by course\n");
+         printf("5. Count of students\n");
+         printf("6. Delete a student\n");
+         printf("7. Update a student\n");
+         printf("8. Exit\n");
+         printf("Enter your choice: ");
+         scanf("%d", &choice);
+         switch (choice)
+         {
+             case 1:
+             add_student();
+             break;
+
+             case 2:
+             check_roll();
+             break;
+
+             case 3:
+             check_firstname();
+             break;
+
+             case 4:
+             check_course();
+             break;
+
+             case 5:
+             student_count();
+             break;
+
+             case 6:
+             student_delete();
+             break;
+
+             case 7:
+             student_update();
+             break;
+
+             case 8:
+             exit(0);
+
+            default:
+            printf("Invalid choice.\n");
+            }
+}
+return 0;
+}
